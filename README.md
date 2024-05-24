@@ -27,20 +27,6 @@ Essa aplicação deve conter os seguintes requisitos:
 
 ## ⏳ Inicialização
 
-Configuração de ambiente - Java:
-
-[Instalando Java 17](https://www.notion.so/Instalando-Java-17-a6636205fb13442d86998dda72710fdc?pvs=21)
-
-[Instalando o Maven](https://www.notion.so/Instalando-o-Maven-c8c4867618ed40c8a2a9e41e4a420714?pvs=21)
-
-[VSCode](https://www.notion.so/VSCode-000de9f0a071416c99de0d217af8caf5?pvs=21)
-
-[Rest Client](https://www.notion.so/Rest-Client-0c31289c8a034a699182cf3fa7554121?pvs=21)
-
-[Instalando Docker e Docker Compose](https://www.notion.so/Instalando-Docker-e-Docker-Compose-7953729d22554795b50033c4c19eae70?pvs=21)
-
-<br/>
-
 
 
 
