@@ -41,21 +41,6 @@ Configuração de ambiente - Java:
 
 <br/>
 
-## 🔮 Implementações futuras
-1. Implementar a documentação da nossa aplicação, utilizando o Swagger, através dela iremos definir exemplos de requisições e retornos, além de definir retornos de sucesso ou de erros.
-2. Implementar testes na aplicação usando JUnit e Mockito, abrangendo testes de integração e unitários, utilizando as ferramentas como o SonarQube e JaCoCo.
-3. Implementar Spring Actuator para monitoramento, junto a outras ferramentas como Prometheus e o Grafana, tudo isso de forma visual e interativa.
-4. Implementar o front-end da aplicação.
-
-
-<br/>
-
-## 🔎 Status do Projeto
-
-![Badge em Desenvolvimento](https://img.shields.io/badge/Status-Em%20Desenvolvimento-green)
-
-<br/>
-
 
 
 
