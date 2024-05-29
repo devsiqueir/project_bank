@@ -37,17 +37,19 @@ Você precisa ter o Java e o Maven instalados e configurados localmente.
 
 Abra o projeto crud-spring em seu IDE favorito como um projeto Maven e execute-o como um aplicativo Spring Boot.
 
-### Executing the front-end
 
-You need to have Node.js / NPM installed locally.
+### Executando o front-end
 
-1. Install all the required dependencies:
+Você precisa ter o Node.js/NPM instalado localmente.
+
+1. Instale todas as dependências necessárias:
 
 ```
 npm install
 ```
 
-2. Execute the project:
+
+2. Execute o projeto:
 
 ```
 ng serve
