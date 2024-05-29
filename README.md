@@ -53,6 +53,12 @@ npm install
 
 ```
 ng serve
+
+![image](https://github.com/devsiqueir/testeIBM/assets/50212867/2bdeb6ca-e765-49f8-8bfc-3cf7a078e2bf)
+
+![image](https://github.com/devsiqueir/testeIBM/assets/50212867/2cd4b4d6-7c45-49dd-b3fa-dddc01f96222)
+
+
 ```
 
 
