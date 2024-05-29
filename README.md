@@ -17,16 +17,41 @@ Essa aplicação deve conter os seguintes requisitos:
 
 <br/>
 
-## 📡 Tecnologias utilizadas 
-<div align="center"> 
-<img align="left" alt="Java" height="30" width="30" src="https://github.com/devicons/devicon/blob/master/icons/java/java-original.svg">
-<img align="left" alt="Angular" height="30" width="30" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/angular/angular-original.svg">
-<img align="left" alt="Mysql" height="30" width="30" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg">
-</div>
-<br/><br/>
+
+## 💻 Tecnologies
+
+- Java 17
+- Spring Boot 3 
+- Maven
+- JPA + Hibernate
+- MySQL
+- Angular v16
+- Node 20.13.1
+
 
 ## ⏳ Inicialização
 
+Ambiente
+Executando o back-end
+Você precisa ter o Java e o Maven instalados e configurados localmente.
+
+Abra o projeto crud-spring em seu IDE favorito como um projeto Maven e execute-o como um aplicativo Spring Boot.
+
+### Executing the front-end
+
+You need to have Node.js / NPM installed locally.
+
+1. Install all the required dependencies:
+
+```
+npm install
+```
+
+2. Execute the project:
+
+```
+ng serve
+```
 
 
 
