@@ -32,6 +32,8 @@ Essa aplicação deve conter os seguintes requisitos:
 ## ⏳ Inicialização
 
 ## Configurações do banco de dados:
+
+```
 spring.application.name=banco
 spring.jpa.hibernate.ddl-auto=update
 spring.datasource.url=jdbc:mysql://localhost:3306/db_ibm?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
@@ -40,7 +42,7 @@ spring.datasource.password=Consul20*
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.show-sql=true
 server.port=8080
-
+```
 
 ### Executando o backend
 Você precisa ter o Java e o Maven instalados e configurados localmente.
