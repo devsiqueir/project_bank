@@ -42,7 +42,7 @@
         <td>{{ client.conta.numeroConta }}</td>
         <td>{{ client.conta.saldo }}</td>
         <td>
-          <button pButton pRipple tooltipPosition="bottom" [pTooltip]="'Visualizar Extrato'" icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" (click)="openExtratoDialog(client.conta.id)"></button>
+          <button pButton pRipple tooltipPosition="bottom" [pTooltip]="'Visualizar Extrato'" icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" (click)="openExtratoDialog(client.conta.id, client.conta.saldo)"></button>
           <button pButton pRipple tooltipPosition="bottom" [pTooltip]="'Editar'" icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2" (click)="editClient(client.id)"></button>
           <button pButton pRipple tooltipPosition="bottom" [pTooltip]="'Excluir'" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2" (click)="deleteClient(client)"></button>
         </td>
@@ -126,7 +126,17 @@
 
 <p-dialog [(visible)]="extratoDialog" [style]="{ width: '800px' }" header="Extrato da Conta" [modal]="true" styleClass="p-grid p-fluid">
   <ng-template pTemplate="content">
-    <p-table [value]="extrato" [scrollable]="true" scrollHeight="400px">
+    <div class="saldo-container">
+      <div class="saldo-card">
+        <label class="saldo-label">Saldo:</label>
+        <div class="saldo-value">{{ saldoConta | currency:'BRL' }}</div>
+      </div>
+    </div>
+    <p-table 
+    [value]="extrato" 
+    [scrollable]="true" 
+    scrollHeight="400px"
+    >
       <ng-template pTemplate="header">
         <tr>
           <th>Data</th>

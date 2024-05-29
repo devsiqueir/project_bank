@@ -28,6 +28,8 @@ export class ClientesComponent implements OnInit{
 
   extratoDialog: boolean = false;
   extrato: any[] = [];
+client: any;
+saldoConta: any;
 
 
   constructor(
@@ -221,7 +223,8 @@ export class ClientesComponent implements OnInit{
   }
 
 
-  openExtratoDialog(contaId: any) {
+  openExtratoDialog(contaId: any, saldo: any) {
+    this.saldoConta = saldo;
     this.extratoDialog = true;
     this.transacaoService.getExtratoContaCliente(contaId).subscribe(extrato => {
       this.extrato = extrato;
