@@ -1,13 +1,16 @@
 <div class="card">
   <p-toast></p-toast>
-  <p-toolbar styleClass="mb-4 gap-2">
-    <ng-template pTemplate="left">
-      <button pButton pRipple label="Novo Cliente" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewClientDialog()"></button>
-      <div tooltipPosition="left" [pTooltip]="'Selecione dois clientes.'">
-        <button pButton pRipple label="Nova Transação" icon="pi pi-arrow-right-arrow-left" class="p-button-info" (click)="openTransferClientDialog()" [disabled]="selectedClients.length !== 2"
-        ></button>
-      </div>
 
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <div class="button-container">
+        <input type="text" pInputText placeholder="Buscar por nome" [(ngModel)]="searchText" (keyup)="filterByName($event)">
+        <button pButton pRipple label="Novo Cliente" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNewClientDialog()"></button>
+        <div tooltipPosition="left" [pTooltip]="'Selecione dois clientes.'">
+          <button pButton pRipple label="Nova Transação" icon="pi pi-arrow-right-arrow-left" class="p-button-info" (click)="openTransferClientDialog()" [disabled]="selectedClients.length !== 2"></button>
+        </div>
+      </div>
+      
     </ng-template>
   </p-toolbar>
 

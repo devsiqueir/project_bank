@@ -24,4 +24,10 @@
     font-size: 1.2rem;
     color: #007ad9;
   }
+
+  .button-container {
+    display: flex; /* Enable Flexbox layout */
+    align-items: center; /* Align items vertically */
+    gap: 1rem; /* Create horizontal spacing between elements */
+  }
   

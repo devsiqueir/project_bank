@@ -30,6 +30,8 @@ export class ClientesComponent implements OnInit, OnDestroy {
   extrato: any[] = [];
   saldoConta: any;
 
+  searchText: string = '';
+
   constructor(
     private clienteService: ClienteService,
     private transacaoService: TransacaoService,
@@ -200,5 +202,11 @@ export class ClientesComponent implements OnInit, OnDestroy {
 
   formatarData(value: any) {
     return formatStringDateDayMonthYear(value);
+  }
+
+  // Search Methods 
+  filterByName(event: any) {
+    const value = event.target.value.toLowerCase();
+    this.clientList = this.clientList.filter((client) => client.nome.toLowerCase().indexOf(value) !== -1);
   }
 }
