@@ -13,7 +13,7 @@ export class MenuComponent {
   ngOnInit() {
       this.items = [
           { label: 'Clientes', icon: 'pi pi-fw pi-users', routerLink: '/' },
-          { label: 'Relatório de Transações', icon: 'pi pi-fw pi-file-export', routerLink: '/relatorio' },
+          { label: 'Transações', icon: 'pi pi-fw pi-file-export', routerLink: '/relatorio' },
       ];
   }
 
