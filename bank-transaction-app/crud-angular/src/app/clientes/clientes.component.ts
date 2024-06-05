@@ -90,7 +90,7 @@ export class ClientesComponent implements OnInit, OnDestroy {
       accept: () => {
         this.clienteService.deleteCliente(client.id).subscribe(
           () => this.handleSuccess('Cliente excluído com sucesso.', this.loadClients.bind(this)),
-          (err: any) => this.handleError('Algo deu errado ao deletar os dados.', err)
+          (err: any) => this.handleError('Não foi possível deletar os dados. Verifique se há registros relacionados que impedem a exclusão.', err)
         );
       },
       reject: () => {}
