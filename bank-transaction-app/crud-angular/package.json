@@ -1,7 +1,6 @@
 {
   "name": "banco",
   "version": "01.00.00.00",
-  "actorName": "Renato Novais",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
