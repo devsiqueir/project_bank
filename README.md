@@ -36,13 +36,15 @@ Essa aplicação deve conter os seguintes requisitos:
 ```
 spring.application.name=banco
 spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:mysql://localhost:3306/db_ibm?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
-spring.datasource.username=root
-spring.datasource.password=Consul20*
+spring.datasource.url=jdbc:mysql://localhost:3306/seu-banco?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSl=false
+spring.datasource.username=seu usuário
+spring.datasource.password=sua senha
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.jpa.show-sql=true
 server.port=8080
 ```
+
+
 
 ### Executando o backend
 Você precisa ter o Java e o Maven instalados e configurados localmente.
@@ -74,3 +76,9 @@ ng serve
 
 
 ![clientesIBM2](https://github.com/devsiqueir/testeIBM/assets/50212867/2b35c5ce-416d-413b-92fe-c1e7bceef695)
+
+
+### Documentação da API
+```
+http://localhost:8080/swagger-ui/index.html#/
+```
