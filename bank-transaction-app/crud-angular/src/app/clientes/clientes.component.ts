@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MessageService, ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ClienteService } from '../services/cliente.service';
 import { cloneDeep } from 'lodash';
@@ -12,7 +12,7 @@ import { catchError, of, tap } from 'rxjs';
   styleUrls: ['./clientes.component.css'],
   providers: [MessageService, ConfirmationService]
 })
-export class ClientesComponent implements OnInit{
+export class ClientesComponent implements OnInit, OnDestroy {
 
   clientList: any[] = [];
   selectedClients: any[] = [];
@@ -28,9 +28,7 @@ export class ClientesComponent implements OnInit{
 
   extratoDialog: boolean = false;
   extrato: any[] = [];
-client: any;
-saldoConta: any;
-
+  saldoConta: any;
 
   constructor(
     private clienteService: ClienteService,
@@ -43,22 +41,18 @@ saldoConta: any;
   ngOnInit() {
     this.loadClients();
     this.startAutoRefresh();
-
     this.primengConfig.ripple = true;
   }
 
+  ngOnDestroy() {
+    this.stopAutoRefresh();
+  }
+
+  // Client Methods
   loadClients() {
     this.clienteService.getTodosClientes().pipe(
-      tap((data: any) => {
-        this.clientList = data;
-      }),
-      catchError((err: any) => {
-        this.ms.add({
-          severity: 'error',
-          detail: err.error.mensagem ? err.error.mensagem : 'Algo deu errado ao buscar os dados.',
-        });
-        return of([]); // Return an observable to complete the stream
-      })
+      tap((data: any) => this.clientList = data),
+      catchError((err: any) => this.handleError('Algo deu errado ao buscar os dados.', err))
     ).subscribe();
   }
 
@@ -78,120 +72,66 @@ saldoConta: any;
   }
 
   editClient(clientId: any) {
-    this.selectedClientId = clientId
-    this.clienteService.getClienteById(clientId).subscribe((client: any) => {
-      this.newClient = client;
-      this.newClient.numeroConta = client.conta.numeroConta;
-      this.newClient.saldo = client.conta.saldo;
-    }, (error) => {
-      console.error('Erro ao buscar o cliente por ID:', error);
-    });
-    this.clientDialog = true;
+    this.selectedClientId = clientId;
+    this.clienteService.getClienteById(clientId).subscribe(
+      (client: any) => {
+        this.newClient = { ...client, numeroConta: client.conta.numeroConta, saldo: client.conta.saldo };
+        this.clientDialog = true;
+      },
+      (error) => this.handleError('Erro ao buscar o cliente por ID', error)
+    );
   }
 
   deleteClient(client: any) {
     this.confirmationService.confirm({
-      message: "Deseja excluir o registro selecionado?", header: 'Exclusão', icon: 'pi pi-trash',
+      message: "Deseja excluir o registro selecionado?", 
+      header: 'Exclusão', 
+      icon: 'pi pi-trash',
       accept: () => {
-        this.clienteService.deleteCliente(client.id).subscribe((data: any) => {
-            this.ms.add({
-              severity: "success",
-              detail: "Cliente excluído com sucesso.",
-            });
-            this.loadClients();
-          }, (err: any) => {
-            this.ms.add({
-              severity: 'error',
-              detail:  err.error.message? err.error.message : 'Algo deu errado ao deletar os dados.',
-            });
-          }
+        this.clienteService.deleteCliente(client.id).subscribe(
+          () => this.handleSuccess('Cliente excluído com sucesso.', this.loadClients.bind(this)),
+          (err: any) => this.handleError('Algo deu errado ao deletar os dados.', err)
         );
       },
-      reject: () => { }
+      reject: () => {}
     });
   }
 
   saveClient() {
-    const param: any = {
-      nome: this.newClient?.nome,
-      idade: this.newClient?.idade,
-      email: this.newClient?.email,
+    const param = {
+      nome: this.newClient.nome,
+      idade: this.newClient.idade,
+      email: this.newClient.email,
       conta: {
-        numeroConta: this.newClient?.numeroConta,
-        saldo: this.newClient?.saldo
+        numeroConta: this.newClient.numeroConta,
+        saldo: this.newClient.saldo
       }
     };
-  
-    console.log("Selected Client ID:", this.selectedClientId); // Log the selectedClientId
-  
-    if (this.selectedClientId === null || this.selectedClientId === undefined) {
+
+    if (this.selectedClientId == null) {
       this.clienteService.postClient(param).subscribe(
-        (data: any) => {
-          this.ms.add({
-            severity: "success",
-            detail: "Cliente criado com sucesso.",
-          });
-          this.loadClients();
-          this.clientDialog = false;
-        },
-        (err: any) => {
-          this.ms.add({
-            severity: 'error',
-            detail: err.error.errors[0].defaultMessage ? err.error.errors[0].defaultMessage : 'Algo deu errado ao salvar os dados.',
-          });
-        }
+        () => this.handleSuccess('Cliente criado com sucesso.', this.loadClients.bind(this)),
+        (err: any) => this.handleError('Algo deu errado ao salvar os dados.', err)
       );
     } else {
       this.clienteService.putCliente(this.selectedClientId, param).subscribe(
-        (data: any) => {
-          this.ms.add({
-            severity: "success",
-            detail: "Cliente editado com sucesso.",
-          });
-          this.loadClients();
-          this.selectedClientId = null;
-          this.clientDialog = false;
-        },
-        (err: any) => {
-          this.ms.add({
-            severity: 'error',
-            detail: err.error.errors[0].defaultMessage ? err.error.errors[0].defaultMessage : 'Algo deu errado ao editar os dados.',
-          });
-        }
+        () => this.handleSuccess('Cliente editado com sucesso.', this.loadClients.bind(this)),
+        (err: any) => this.handleError('Algo deu errado ao editar os dados.', err)
       );
     }
-  }
-  
-       
-  
 
-  startAutoRefresh() {
-    this.refreshSubscription = this.clienteService.getClientesAutoRefresh().subscribe(
-      data => {
-        this.clientList = data;
-      },
-      error => {
-        console.error('Erro ao atualizar clientes:', error);
-      }
-    );
+    this.clientDialog = false;
   }
 
-  stopAutoRefresh() {
-    if (this.refreshSubscription) {
-      this.refreshSubscription.unsubscribe();
-    }
-  }
-
-
+  // Transfer Methods
   openTransferClientDialog() {
     if (this.selectedClients.length === 2) {
       this.selectedClientsCopy = cloneDeep(this.selectedClients);
       this.transferClientDialog = true;
     } else {
-      this.ms.add({severity:'warn', summary:'Atenção', detail:'Selecione exatamente dois clientes para realizar a transferência.'});
+      this.showMessage('warn', 'Atenção', 'Selecione exatamente dois clientes para realizar a transferência.');
     }
   }
-  
 
   cancelTransfer() {
     this.transferClientDialog = false;
@@ -204,42 +144,61 @@ saldoConta: any;
       valor: this.valorTransferencia
     };
 
-    this.transacaoService.postLancarTransferenciaFinanceira(transferData)
-      .subscribe(
-        (response) => {
-          console.log('Transferência realizada com sucesso!');
-          this.transferClientDialog = false;
-          this.ms.add({severity:'success', summary:'Sucesso', detail:'Transferência realizada com sucesso.'});
-          this.loadClients();
-        },
-        (error) => {
-          console.error('Erro ao realizar a transferência:', error);
-          this.ms.add({severity:'error', summary:'Erro', detail:'Ocorreu um erro ao realizar a transferência.'});
-        }
-      );  }
+    this.transacaoService.postLancarTransferenciaFinanceira(transferData).subscribe(
+      () => this.handleSuccess('Transferência realizada com sucesso.', this.loadClients.bind(this)),
+      (error) => this.handleError('Ocorreu um erro ao realizar a transferência.', error)
+    );
+
+    this.transferClientDialog = false;
+  }
 
   isTransferValid() {
     return this.valorTransferencia && this.valorTransferencia > 0;
   }
 
-
+  // Extrato Methods
   openExtratoDialog(contaId: any, saldo: any) {
     this.saldoConta = saldo;
     this.extratoDialog = true;
-    this.transacaoService.getExtratoContaCliente(contaId).subscribe(extrato => {
-      this.extrato = extrato;
-    });
+    this.transacaoService.getExtratoContaCliente(contaId).subscribe(
+      extrato => this.extrato = extrato
+    );
   }
 
   closeExtratoDialog() {
     this.extratoDialog = false;
   }
 
-  formatarData(value: any) {
-    return formatStringDateDayMonthYear(value);
+  // Util Methods
+  startAutoRefresh() {
+    this.refreshSubscription = this.clienteService.getClientesAutoRefresh().subscribe(
+      data => this.clientList = data,
+      error => console.error('Erro ao atualizar clientes:', error)
+    );
   }
 
-  ngOnDestroy() {
-    this.stopAutoRefresh();
+  stopAutoRefresh() {
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
+  }
+
+  handleSuccess(detail: string, callback: Function) {
+    this.showMessage('success', 'Sucesso', detail);
+    callback();
+  }
+
+  handleError(detail: string, error: any) {
+    console.error(detail, error);
+    this.showMessage('error', 'Erro', detail);
+    return of([]); 
+  }
+
+  showMessage(severity: string, summary: string, detail: string) {
+    this.ms.add({ severity, summary, detail });
+  }
+
+  formatarData(value: any) {
+    return formatStringDateDayMonthYear(value);
   }
 }
