@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { RodapeComponent } from './rodape/rodape.component';
 import { ClientesComponent } from './clientes/clientes.component';
-import { ExtratoComponent } from './extrato/extrato.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 
 import { ImageModule } from 'primeng/image';
