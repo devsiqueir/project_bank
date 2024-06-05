@@ -1,6 +1,7 @@
 {
   "name": "banco",
-  "version": "01.00.00.00",
+  "version": "01.00.00.00"
+
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
