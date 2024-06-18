@@ -1,11 +1,4 @@
 
-#  DESAFIO IBM
-
-## 📖  Descrição
-O desafio consiste em criar uma aplicação web que simule transações financeiras de um banco.
-
-
-<br/>
 
 ## 🛠️ Funcionalidades
 
